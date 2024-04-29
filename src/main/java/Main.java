@@ -27,7 +27,7 @@ public class Main {
         System.out.println("Введите количество человек (больше 1), между которыми разделить счет");
         int num;
         while (true) {
-            num = scanner.nextInt();
+            num = parsePositiveInt(scanner);
             if (num <= 1) {
                 System.out.println("Неверное количество персон, введите число больше 1");
             } else {
@@ -43,8 +43,17 @@ public class Main {
     }
 
     public static double askPrice(Scanner scanner) {
-        System.out.println("Введите стоимость (руб.коп)");
-        return scanner.nextDouble();
+        double price = 0.0;
+        while (true) {
+            System.out.println("Введите стоимость (руб.коп)");
+            price = parseDouble(scanner);
+            if (price < 0.0) {
+                System.out.println("Некорректное значение");
+            } else {
+                break;
+            }
+        }
+        return price;
     }
 
     public static boolean askContinue(Scanner scanner) {
@@ -53,6 +62,31 @@ public class Main {
         return !input.equalsIgnoreCase("завершить");
     }
 
+    static int parsePositiveInt(Scanner scanner) {
+        String input = scanner.next().strip();
+        for (Character c: input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return -1;
+            }
+        }
+        return Integer.parseInt(input);
+    }
+
+    static double parseDouble(Scanner scanner) {
+        String input = scanner.next().strip();
+        boolean haveDot = false;
+        for (Character c: input.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                if (c.equals('.') && !haveDot) {
+                    haveDot = true;
+                    continue;
+                } else {
+                    return -1.0;
+                }
+            }
+        }
+        return Double.parseDouble(input);
+    }
 
 }
 

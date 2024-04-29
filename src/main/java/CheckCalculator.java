@@ -3,9 +3,9 @@ import java.util.HashMap;
 
 public class CheckCalculator {
 
-    int numPersons;
-    double finalSum;
-    HashMap<String,CheckItem> checkItems;
+    private int numPersons;
+    private double finalSum;
+    private HashMap<String,CheckItem> checkItems;
     public CheckCalculator(int numPersons) {
         this.numPersons = numPersons;
         this.checkItems = new HashMap<>();
@@ -13,9 +13,17 @@ public class CheckCalculator {
     }
 
     public double calculate() {
+        if (numPersons < 2) {
+            System.out.println("Количество человек меньше 2");
+            return 0.0;
+        }
         return finalSum / numPersons;
     }
     public double reCalculate() {
+        if (numPersons < 2) {
+            System.out.println("Количество человек меньше 2");
+            return 0.0;
+        }
         double sum = 0;
         for (CheckItem i: checkItems.values()) {
             sum += i.calculateCost();
